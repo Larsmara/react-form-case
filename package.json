@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "s:client": "cd client && npm run dev",
+    "s:server": "nodemon server/server.js",
+    "i:client": "cd client && npm install",
+    "i:server": "cd server && npm install"
+  },
+  "dependencies": {
+    "react-aria": "^3.29.1",
+    "react-aria-components": "^1.0.0-beta.2",
+    "react-hook-form": "^7.47.0"
+  }
+}
