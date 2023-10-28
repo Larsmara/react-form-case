@@ -1,7 +1,7 @@
 {
   "scripts": {
     "s:client": "cd client && npm run dev",
-    "s:server": "nodemon server/server.js",
+    "s:server": "node server/server.js",
     "i:client": "cd client && npm install",
     "i:server": "cd server && npm install"
   },
