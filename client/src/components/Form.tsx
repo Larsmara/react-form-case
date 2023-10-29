@@ -50,7 +50,7 @@ export const Form = ({ zipCodes }: FormProps) => {
       <FormProvider {...methods}>
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-2 form"
         >
           <TextFieldWrapper {...isNameValid} />
           <TextFieldWrapper {...isEmailValid} />

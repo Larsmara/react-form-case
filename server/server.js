@@ -26,19 +26,24 @@ app.post("/api", (req, res) => {
 app.listen(port, () => console.log(`Server listening on port ${port}`));
 
 async function getZipCodes() {
-  const zipCodes = [];
-  const data = await fs.readFile(__dirname + "./zipCodes.txt", "utf8");
-  const lines = data.split("\n");
-  lines.forEach((line) => {
-    const columns = line.split("\t");
-    const dataObj = {
-      code: columns[0].trim(),
-      place: columns[1].trim(),
-      city: columns[3].trim(),
-    };
-    zipCodes.push(dataObj);
-  });
-  return zipCodes;
+  try {
+    const content = await fs.readFile(__dirname + "/zipCodes.txt", "utf8");
+    const zipCodes = [];
+    const lines = content.split("\n");
+    lines.forEach((line) => {
+      const columns = line.split("\t");
+      const dataObj = {
+        code: columns[0]?.trim(),
+        place: columns[1]?.trim(),
+        city: columns[3]?.trim(),
+      };
+      zipCodes.push(dataObj);
+    });
+    return zipCodes;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 function validateFormData(data) {
