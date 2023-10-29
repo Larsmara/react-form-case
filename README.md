@@ -62,3 +62,8 @@ The server has two endpoints:
 - Backend does not send a notification to the supplied email address.
 - Backend does not take account for any spam
 - Feedback after form submitt could be a bit better
+
+# Further improvements
+
+- Handle incomming spam in the backend
+- Further increase the form to give instant feedback on the form inputs, instead of on submit
