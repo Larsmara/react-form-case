@@ -11,7 +11,7 @@ export const AutoComplete = ({ data }: AutocompleteInputProps) => {
   const { zip } = getValues();
 
   useEffect(() => {
-    if (zip && data) {
+    if (zip && zip.length >= 4 && data) {
       setSuggestions(getZipCodeLocation(data, zip));
     } else {
       setSuggestions(null);
@@ -22,11 +22,17 @@ export const AutoComplete = ({ data }: AutocompleteInputProps) => {
     <div className="flex gap-4">
       <TextFieldWrapper {...isZipCodeValid} />
 
-      <div className="flex flex-col flex-0 w-full gap-2">
-        <p className="capitalize font-semibold">Place</p>
-        <p className="p-5 w-full flex-1 bg-gray-400 font-medium text-gray-800  rounded-md border border-slate-300 placeholder:opacity-60">
-          {zip !== "" ? suggestions?.place : ""}
-        </p>
+      <div className="form-control w-full max-w-xs">
+        <label htmlFor="zipCode" className="label capitalize text-accent">
+          Place
+        </label>
+        <input
+          id="zipCode"
+          type="text"
+          value={suggestions ? suggestions?.place : ""}
+          className="input input-bordered w-full max-w-xs !cursor-default"
+          disabled
+        />
       </div>
     </div>
   );

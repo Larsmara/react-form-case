@@ -6,6 +6,7 @@
     "i:server": "cd server && npm install"
   },
   "dependencies": {
+    "daisyui": "^3.9.4",
     "react-aria": "^3.29.1",
     "react-aria-components": "^1.0.0-beta.2",
     "react-hook-form": "^7.47.0"

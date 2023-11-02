@@ -18,6 +18,7 @@ export interface FormDataExtended extends FormData {
 
 export interface FormProps {
   zipCodes: Array<ZipCode>;
+  resetFormAction: Function;
 }
 
 export interface FormSchema {

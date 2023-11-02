@@ -1,6 +1,5 @@
 import { TextFieldWrapper } from "./TextFieldWrapper";
-import { Button } from "react-aria-components";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 import {
   isNameValid,
@@ -12,59 +11,67 @@ import { FormDataExtended, FormProps, FormSchema } from "../types";
 import getZipCodeLocation from "../utils/getZipCodeLocation";
 import { postForm, postToCase } from "../api";
 
-export const Form = ({ zipCodes }: FormProps) => {
-  const methods = useForm<FormDataExtended>();
+export const Form = ({ zipCodes, resetFormAction }: FormProps) => {
+  const methods = useForm<FormDataExtended>({
+    mode: "onChange",
+  });
   const [success, setSuccess] = useState(false);
 
-  const onSubmit: SubmitHandler<FormDataExtended> = methods.handleSubmit(
-    async (data) => {
-      const zip = getZipCodeLocation(zipCodes, data.zip);
-      const mappedData: FormSchema = {
-        ...data,
-        zip,
-        applicant: "Lars-Martin Antonsen",
-      };
+  const onSubmit = async (data: any) => {
+    const zip = getZipCodeLocation(zipCodes, data.zip);
+    const mappedData: FormSchema = {
+      ...data,
+      zip,
+      applicant: "Lars-Martin Antonsen",
+    };
 
-      try {
-        const res = await postForm(mappedData);
-        console.log(res);
-        if (res === 200) {
-          await postToCase(mappedData);
-          methods.reset();
-          setSuccess(true);
-        }
-      } catch (error) {
-        console.error(error);
-        setSuccess(false);
+    try {
+      const res = await postForm(mappedData);
+      if (res === 200) {
+        await postToCase(mappedData);
+        methods.reset();
+        setSuccess(true);
       }
+    } catch (error) {
+      console.error(error);
+      setSuccess(false);
     }
-  );
+  };
 
-  return (
-    <>
-      {success && (
-        <h2 className="font-semibold text-green-500 mb-5 flex items-center">
-          Form has been submitted!
-        </h2>
-      )}
-      <FormProvider {...methods}>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col gap-2 form"
-        >
-          <TextFieldWrapper {...isNameValid} />
-          <TextFieldWrapper {...isEmailValid} />
-          <TextFieldWrapper {...isPhoneValid} />
-          {zipCodes && zipCodes?.length > 0 && <AutoComplete data={zipCodes} />}
-
-          <Button
-            onPress={onSubmit}
-            className="bg-teal-600 p-3 rounded-md w-full mt-2"
+  if (success) {
+    return (
+      <div className="card flex-shrink-0 w-full max-w-sm shadow-sm bg-base-100">
+        <div className="card-body">
+          <h2 className="font-semibold text-teal-500 mb-5 text-center">
+            Thank you for registering!
+          </h2>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="card-body">
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="flex flex-col gap-2 form"
           >
-            Submit
-          </Button>
-        </form>
-      </FormProvider>
-    </>
-  );
+            <TextFieldWrapper {...isNameValid} />
+            <TextFieldWrapper {...isEmailValid} />
+            <TextFieldWrapper {...isPhoneValid} />
+            {zipCodes && zipCodes?.length > 0 && (
+              <AutoComplete data={zipCodes} />
+            )}
+
+            <button type="submit" className="btn btn-accent mt-2">
+              Register
+            </button>
+          </form>
+        </FormProvider>
+        <button className="btn" onClick={() => resetFormAction()}>
+          REset
+        </button>
+      </div>
+    );
+  }
 };

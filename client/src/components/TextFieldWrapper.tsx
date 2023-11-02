@@ -23,14 +23,9 @@ export function TextFieldWrapper({
   validation,
   onChange,
 }: TextFieldWrapperProps) {
-  const {
-    register,
-    formState: { errors },
-    getValues,
-    watch,
-  } = useFormContext();
+  const { register, formState, getValues, watch } = useFormContext();
 
-  const inputErrors = findInputError(errors, name) as InputError;
+  const inputErrors = findInputError(formState.errors, name) as InputError;
   const isInvalid: boolean = isFormValid(inputErrors);
 
   useEffect(() => {
@@ -41,20 +36,24 @@ export function TextFieldWrapper({
   }, [watch()]);
 
   return (
-    <div className="flex flex-col w-full gap-2">
-      <label htmlFor={id} className="capitalize font-semibold">
+    <div className="form-control w-full max-w-xs">
+      <label htmlFor={id} className="label capitalize text-accent">
         {label}
       </label>
       <input
         id={id}
         type={type}
         placeholder={placeholder}
-        className="p-5 text-gray-800 font-medium rounded-md w-full border border-slate-300 placeholder:opacity-60"
+        className={`input w-full max-w-xs input-bordered ${
+          isInvalid ? "input-error" : ""
+        }`}
         {...register(name, validation)}
       />
       {isInvalid && (
-        <p className="flex items-center gap-1 px-2 font-semibold text-red-500 bg-red-100 rounded-md">
-          {inputErrors.error.message}
+        <p className="label">
+          <span className="label-text-alt text-error">
+            {inputErrors.error.message}
+          </span>
         </p>
       )}
     </div>
