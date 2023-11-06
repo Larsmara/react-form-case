@@ -25,7 +25,7 @@ export const postForm = async (data: FormSchema): Promise<any> => {
 };
 
 export const postToCase = async (data: FormSchema): Promise<any> => {
-  /* try {
+  try {
     const res = await fetch("https://case.nettbureau.no/submit", {
       method: "POST",
       headers: {
@@ -34,9 +34,8 @@ export const postToCase = async (data: FormSchema): Promise<any> => {
       },
       body: JSON.stringify(data),
     });
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
-  } */
+  }
 };
