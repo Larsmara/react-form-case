@@ -31,6 +31,7 @@ export const Form = ({ zipCodes, resetFormAction }: FormProps) => {
         await postToCase(mappedData);
         methods.reset();
         setSuccess(true);
+        resetFormAction();
       }
     } catch (error) {
       console.error(error);
@@ -68,9 +69,6 @@ export const Form = ({ zipCodes, resetFormAction }: FormProps) => {
             </button>
           </form>
         </FormProvider>
-        <button className="btn" onClick={() => resetFormAction()}>
-          REset
-        </button>
       </div>
     );
   }

@@ -41,7 +41,7 @@ body {
 }
 
 .walking-container,
-.walking-zoidberg {
+.walking {
   height: 210px;
   width: 210px;
 }
@@ -49,7 +49,7 @@ body {
 .walking-container.animate {
   display: block;
 }
-.animate .walking-zoidberg {
+.animate .walking {
   animation: walkAnimation;
   animation-duration: 10s;
   animation-iteration-count: 1;

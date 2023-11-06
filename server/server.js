@@ -15,7 +15,6 @@ app.get("/zip", async (req, res) => {
 
 app.post("/api", (req, res) => {
   const isDataValid = validateFormData(req.body);
-  console.log(isDataValid);
   if (isDataValid) {
     res.sendStatus(200);
   } else {
